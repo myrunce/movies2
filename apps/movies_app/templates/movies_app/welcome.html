@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Welcome to Movies</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+        <script>
+          var api_key = 'sszbbjhadk82fc9nh469bs2k';
+          var base_img_url = "http://developer.tmsimg.com/";
+          var baseUrl = "http://data.tmsapi.com/v1.1";
+          var showtimesUrl = baseUrl + '/movies/showings';
+          var zipCode = {{current}};  //should be the zip of currently lgged in user
+          var d = new Date();  //i need this to be in a session storing the data from the date field
+          var today = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+          $(document).ready(function(){
+            $.ajax({
+              url: showtimesUrl,
+                data: {startDate: today,
+                  zip: zipCode,
+                  jsonp: "dataHandler",
+                  api_key: api_key,
+                  },
+                dataType: "jsonp",
+              });
+            });
+            function dataHandler(data) {
+                var dataArr = data;
+                dataArr.length = 10
+                console.log(dataArr);
+                    $.each(dataArr, function(index, movie) {
+                        console.log(movie.title);
+                        console.log(movie.preferredImage.uri);
+                        console.log(movie.showtimes[0].theatre.name);
+                        $('.pop').prepend('<div class="a_movie"><a href ="/movies/'+ movie.rootId + '"><img class = "movie_img" src = "' + base_img_url + movie.preferredImage.uri +'?api_key='+api_key+'"></a>' + '<p>' + movie.showtimes[0].theatre.name + '</p>');
+                //the button is going to link to a url with the movie.rootId
+                //MYRON LOOK AT THIS
+              })
+            }
+        </script>
+    </head>
+    <body>
+        <div id="movie">
+          <h2>Movies Showing Near You</h2>
+          <div class="pop">
+          </div>
+        </div>
+    </body>
+</html>

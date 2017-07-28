@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>movie</title>
+      <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script>
+      var api_key = 'sszbbjhadk82fc9nh469bs2k';
+      var baseUrl = "http://data.tmsapi.com/v1.1";
+      var base_img_url = "http://developer.tmsimg.com/";
+      var showtimesUrl = baseUrl + '/movies/'+ {{movie_id}} +'/showings';
+      var zipCode = {{current}};
+      var d = new Date();//{{request.session.date}};  //i need this to be in a session storing the data from the date field
+      var today = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+      $(document).ready(function(){
+        $.ajax({
+          url: showtimesUrl,
+            data: { startDate: today,
+              zip: zipCode,
+              jsonp: "dataHandler",
+              api_key: api_key
+              },
+            dataType: "jsonp",
+          });
+        });
+        function dataHandler(data) {
+          console.log('<p>Found ' + data.length + ' movies showing within 5 miles of ' + zipCode+':</p>')
+          $.each(data, function(index, movie) {
+            for (var i = 0; i < movie.showtimes.length; i++) {
+            $('.poster').html('<img src = "' + base_img_url + movie.preferredImage.uri +'?api_key='+api_key+'">');
+            $('.desc').html('<p>'+movie.shortDescription+'</p>')
+            $('.rating').html('<h1>'+ movie.ratings[0].code +'</h1>')
+              $('.showtimes').append("<form class='shows' action='/' method='post'>{% csrf_token %}<input type='hidden' name='showtime' value="+movie.showtimes[0].dateTime+"><input type='hidden' name='movieid' value="+{{movie_id}}+"><input class="+i+" type='submit' name='submit' value="+ movie.showtimes[0].dateTime +"></form>");
+              $(document).on('click')
+              var count=0
+              $('.'+i).click(function() {
+                $('.showtimes').html('<p> Congradulations on picking '+movie.showtimes[0].dateTime.toString()+'! '+(count+=1)+' people are going with you. Tell your friends to find you and add themselves to this movie.</p>');
+              })
+            }
+          })
+        }
+    </script>
+  </head>
+  <body>
+
+
+    <!-- <p>{{movie_id}}</p> -->
+    <div class="poster">
+    </div>
+    <div class="rating">
+
+    </div>
+    <div class="desc">
+
+    </div>
+    <div class="showtimes">
+
+    </div>
+
+  </body>
+</html>

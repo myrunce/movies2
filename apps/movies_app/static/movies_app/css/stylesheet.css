@@ -1,0 +1,102 @@
+* {
+  margin:0;
+  padding:0;
+  border:0;
+
+}
+
+
+
+div.login{
+display: inline-block;
+border: 3px solid black;
+padding: 10px;
+margin: 50px;
+margin-left: 300px;
+background-color: black;
+border-radius: 10px;
+}
+
+div.register{
+display: inline-block;
+border: 3px solid black;
+vertical-align: top;
+padding: 10px;
+margin: 50px;
+background-color: black;
+font-family: inherit;
+border-radius: 10px;
+}
+
+h1 {
+  text-align:center;
+  font-size: 200%;
+/*  text-transform: uppercase;*/
+  letter-spacing: 1%;
+  margin:20% 0 0 0;
+  color: inherit;
+}
+
+h2 {
+  padding-top: 10px;
+  text-align:center;
+  font-size: 175%;
+  color: black;
+
+}
+h3{
+  text-align:center;
+  letter-spacing: 1%;
+}
+
+.paralax {
+  padding-top: 5%;
+  padding-bottom: 25%;
+
+}
+
+.login-reg{
+  background-color: #290300;
+}
+
+.login{
+  align-content: center;
+}
+
+#coverpic {
+
+ background:url("/static/movies_app/images/seat.png")no-repeat center center fixed;
+  background-size: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+img{
+  opacity: 0.5
+}
+
+p {
+  font-family: 'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+  text-align: right;
+  padding-top:50px;
+  padding-right:50px;
+
+}
+
+.button{
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-left: 70px;
+  }
+
+#login{
+  margin-left: 75px;
+}
+#register{
+  margin-left: 100px;
+}
+#show{
+  padding: 5px 10px;
+}
